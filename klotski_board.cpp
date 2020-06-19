@@ -45,20 +45,20 @@ klotski_board::klotski_board(std::string situation_string, int dx, int dy, const
 		resize_board_to_fit();
 		std::replace(situation_string.begin(), situation_string.end(), split, ' ');
 		std::stringstream ss(situation_string);
-		std::for_each(situation.begin(), situation.end(),
-				[&ss, dx, dy](std::vector<int>& vec){
-				std::for_each(vec.begin(), vec.end(), [&ss, dx, dy](int& n){
-						if(ss.eof()){
-						std::stringstream ss;
-						ss<<"situation is not fit for "<<dx<<"x"<<dy<<" board";
-						throw std::runtime_error(ss.str().c_str());
-						}
-						ss>>n;
-						if(ss.fail()){
-						throw std::runtime_error("situation is not valid");
-						}
-						});
-				});
+		for(auto& i: situation){
+			for(int& n: i){
+				if(ss.eof()){
+					std::stringstream ss;
+					ss<<"situation is not fit for "<<dx<<"x"<<dy<<" board";
+					throw std::runtime_error(ss.str().c_str());
+				}
+				ss>>n;
+				if(ss.fail()){
+					throw std::runtime_error("situation is not valid");
+				}
+
+			}
+		}
 	}
 
 klotski_board::klotski_board(std::fstream& file, int dx, int dy):
@@ -69,19 +69,18 @@ klotski_board::klotski_board(std::fstream& file, int dx, int dy):
 			throw std::runtime_error("file is not open");
 		}
 		resize_board_to_fit();
-		std::for_each(situation.begin(), situation.end(),
-				[&file](std::vector<int>& vec){
-				std::for_each(vec.begin(), vec.end(), [&file](int& n){
-						if(file.eof()){
-						throw std::runtime_error("file is not fit");
-						}
-						file>>n;
-						if(file.fail()){
-						throw std::runtime_error("file is not a valid board file");
-						}
-						});
-				file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-				});
+		for(auto& i:situation){
+			for(int& n: i){
+				if(file.eof()){
+					throw std::runtime_error("file is not fit");
+				}
+				file>>n;
+				if(file.fail()){
+					throw std::runtime_error("file is not a valid board file");
+				}
+
+			}
+		}
 	}
 
 klotski_board::klotski_board(int dx, int dy):
@@ -93,13 +92,12 @@ klotski_board::klotski_board(int dx, int dy):
 
 void klotski_board::reset() noexcept{
 	resize_board_to_fit();
-	int i = 1;
-	std::for_each(situation.begin(), situation.end(),
-			[&i](std::vector<int>& vec){
-			std::for_each(vec.begin(), vec.end(), [&i](int& n){
-					n = i++;
-					});
-			});
+	int inc = 1;
+	for(auto& i: situation){
+		for(int& n: i){
+			n = inc++;
+		}
+	}
 	situation[dy - 1][dx - 1] = 0;
 	zero_x = dx - 1;
 	zero_y = dy - 1;
