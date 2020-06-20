@@ -85,6 +85,7 @@ int main(int argc, char *argv[])
 	int dy = 3;
 	bool is_play = false;
 	bool is_upset = false;
+	bool is_already_upset = false;
 	int upset_num = 10;
 	bool is_edit = false;
 	std::string situation_string;
@@ -249,6 +250,7 @@ int main(int argc, char *argv[])
 			board = std::make_shared<klotski_board>(dx, dy);
 		}
 		board->upset(upset_num);
+		is_already_upset = true;
 	}
 
 	if(is_search){
@@ -263,8 +265,9 @@ int main(int argc, char *argv[])
 		if(board == nullptr){
 			board = std::make_shared<klotski_board>(dx, dy);
 		}
-		if(!is_edit){
+		if(!is_edit && !is_already_upset){
 			board->upset(upset_num);
+			is_already_upset = true;
 		}
 		board->print_board(is_print_board);
 		string line;
@@ -296,6 +299,16 @@ int main(int argc, char *argv[])
 				board->print_board(is_print_board);
 			}else if(cmd_name == "search" || cmd_name == "s"){
 				search_answer(board, is_quiet, is_print_board, KLOTSKI_OUTPUT_STREAM);
+			}else if(cmd_name == "upset" || cmd_name == "u"){
+				try{
+					board->upset(std::stoi(cmd_arg));
+					if(!is_quiet){
+						board->print_board(is_print_board);
+					}
+				}catch(const std::invalid_argument&){
+					cout<<"invalid argument"<<endl
+						<<"usage: upset N"<<endl<<endl;
+				}
 			}else{
 				system(line.c_str());
 			}

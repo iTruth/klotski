@@ -39,6 +39,10 @@ reset board:
 > klotski>reset   
 > klotski>r
 
+upset board for N times:
+> klotski>upset N   
+> klotski>r N
+
 move block(enter coord):
 > klotski>0 0  
 > klotski>1 2
