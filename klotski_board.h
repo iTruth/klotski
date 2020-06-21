@@ -122,16 +122,15 @@ klotski_board::klotski_board(const T& situation_array, int dx, int dy):
 	y_distribution(std::uniform_int_distribution<>(0, dy-1)){
 		resize_board_to_fit();
 		auto const_array_iterator = situation_array.cbegin();
-		std::for_each(situation.begin(), situation.end(),
-				[&situation_array, &const_array_iterator](std::vector<int>& vec){
-				std::for_each(vec.begin(), vec.end(), [&](int& n){
-						if(const_array_iterator != situation_array.cend()){
-						n = *const_array_iterator++;
-						}else{
-						throw std::invalid_argument("situation array is not fit");
-						}
-						});
-				});
+		for(auto& i: situation){
+			for(auto& n: i){
+				if(const_array_iterator != situation_array.cend()){
+					n = *const_array_iterator++;
+				}else{
+					throw std::invalid_argument("situation array is not fit");
+				}
+			}
+		}
 	}
 
 template<typename... Args>

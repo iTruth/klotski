@@ -100,16 +100,16 @@ int main(int argc, char *argv[])
 
 	const char *optstring = "x:y:pu:e::sqbo:f:rh";
 	static struct option long_options[] = {
-		{"play",	no_argument, NULL, 'p'},
-		{"upset",	required_argument, NULL, 'u'},
-		{"edit",	optional_argument, NULL, 'e'},
-		{"search",	required_argument, NULL, 's'},
-		{"quiet",	no_argument, NULL, 'q'},
-		{"board",	no_argument, NULL, 'b'},
-		{"output",	required_argument, NULL, 'o'},
-		{"file",	required_argument, NULL, 'f'},
-		{"research",no_argument, NULL, 'r'},
-		{"help",	no_argument, NULL, 'h'},
+		{"play",		no_argument, NULL, 'p'},
+		{"upset",		required_argument, NULL, 'u'},
+		{"edit",		optional_argument, NULL, 'e'},
+		{"search",		required_argument, NULL, 's'},
+		{"quiet",		no_argument, NULL, 'q'},
+		{"board",		no_argument, NULL, 'b'},
+		{"output",		required_argument, NULL, 'o'},
+		{"file",		required_argument, NULL, 'f'},
+		{"research",	no_argument, NULL, 'r'},
+		{"help",		no_argument, NULL, 'h'},
 		{0, 0, 0, 0}};
 
 	int opt;
@@ -315,6 +315,5 @@ int main(int argc, char *argv[])
 		}
 		cout<<"You Win!"<<endl;
 	}
-
 	return EXIT_SUCCESS;
 }
