@@ -377,8 +377,9 @@ void klotski_board::init_board(int n){
 
 void klotski_board::resize_board_to_fit(){
 	situation.resize(dy);
+	situation.shrink_to_fit();
 	std::for_each(situation.begin(), situation.end(),
-			[this](std::vector<int>& vec){vec.resize(dx);});
+			[this](std::vector<int>& vec){vec.resize(dx); vec.shrink_to_fit();});
 }
 
 void klotski_board::print_line(int dx, int space_n, std::ostream& os) noexcept{

@@ -25,7 +25,9 @@ class klotski_search{
 	public:
 		explicit klotski_search(const klotski_board& board):
 			situation(board.get_situation()),
-			dx(board.get_dx() - 1), dy(board.get_dy() - 1){}
+			dx(board.get_dx() - 1), dy(board.get_dy() - 1){
+				situation.shrink_to_fit();
+			}
 		explicit klotski_search(std::shared_ptr<klotski_board> board_ptr):
 			klotski_search(*board_ptr){};
 
